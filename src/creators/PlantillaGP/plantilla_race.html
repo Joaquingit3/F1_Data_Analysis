@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/imagenes/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Añadir Titulo como variables -->
+    <title id="titulo"></title>
+    <script>
+        const titulo = "Pole de Norris, que confirma que McLaren es un avión y un Verstappen que nunca se puede dar por muerto";
+        const sufijo = " - F1DataHub"
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Modificar el titulo del documento
+            document.getElementById("titulo").innerText = titulo + sufijo;
+            document.title = titulo + sufijo;
+
+            // Modificar todos los elementos .titulo
+            document.querySelectorAll(".titulo").forEach(el => el.innerText = titulo);
+        });
+    </script>
+
+    <!-- Código de Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-XXXXXXXXXXXXXXXX",
+              enable_page_level_ads: true
+         });
+    </script>
+</head>
+<body>
+    <!-- Header Dinámico -->
+    <div id="header">
+    <script>
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+
+                const headerElement = document.querySelector('header'); // Selector del header ya cargado
+
+                // Este es el código que gestiona la clase 'hidden'
+                let lastScrollTop = 0;
+
+                window.addEventListener('scroll', function() {
+                    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                    if (currentScrollTop > lastScrollTop) {
+                        // El usuario hace scroll hacia abajo, ocultar la cabecera
+                        headerElement.classList.add('hidden');
+                    } else {
+                        // El usuario hace scroll hacia arriba, mostrar la cabecera
+                        headerElement.classList.remove('hidden');
+                    }
+
+                    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
+                });
+            });
+    </script>
+    </div>
+
+    <main class="main-content">
+        <article class="centered-content">
+            <div class="article-start">
+                <div class="article-meta">
+                    <span class="category" style="color: {{race.color}}"> 
+                        <a href="/{{race.year}}/{{race.race_doc}}" style="color: {{race.color}}; text-decoration: none;">{{race.category}}</a>
+                    </span>
+                </div>
+                <h1 class="titulo"></h1>
+            </div>
+            <div class="image-container">
+                <img src="imagenes/race/Imagen_principal_race.png" alt="Imagen principal del artículo">
+                <img src="/imagenes/logo-watermark.png" alt="Logo Formula1DataHub" class="watermark-logo">
+            </div>
+            <p>
+            </p>
+            
+            <!-- TABLA DE RESULTADS -->
+            <div class="results-session">
+                <table>
+                    <tr>
+                        <td class="posicion"> </td>
+                        <td class="cambios"> </td>
+                        <td class="pais"></td>
+                        <td class="nombre">Piloto</td>
+                        <td class="equipo"></td>
+                        <td class="nombre">Equipo</td>
+                        <td class="nombre" style="font-weight: normal">Tiempo</td>
+                    </tr>
+                    {% for fila in filas_pilotos%}
+                    <tr>
+                        <td class="posicion">{{fila.posicion}}</td>
+                        <td class="cambios" style="color: {{fila.color}}">{{fila.cambios}}</td>
+                        <td class="pais"><img src="/imagenes/paises/{{fila.nacionalidad}}.jpg"></td>
+                        <td class="nombre">{{fila.piloto}}</td>
+                        <td class="equipo"><img src="/imagenes/equipos/logo_{{fila.equipo}}.png"></td>
+                        <td class="nombre">{{fila.equipo}}</td>
+                        <td class="nombre">{{fila.tiempo}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <p>
+            </p>
+            {% if filas_otros|length > 0 %}
+            {% for otro in filas_otros%}
+            <img src="imagenes/race/{{otro.nombre}}.png" alt="{{otro.nombre}}">
+            <p>
+
+            </p>
+            {% endfor %}
+            {% endif %}
+            {% for comparativa in filas_comparativas%}
+            <h2> Comparativa </h2>
+            <img src="imagenes/race/Comparativa_{{comparativa.driver1}}_{{comparativa.driver2}}.png"
+                 alt="Comparativa tiempos {{comparativa.driver1}} {{comparativa.driver2}}">
+            <p>
+
+            </p>
+            <img src="imagenes/race/Delta_{{comparativa.driver1}}_{{comparativa.driver2}}.png"
+                 alt="Delta {{comparativa.driver1}} {{comparativa.driver2}}">
+            <p>
+
+            </p>
+            {% endfor %}
+
+            <!-- Espacio para Anuncio -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </article>
+    </main>
+
+    <div id="footer">
+    <script>
+        fetch('/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer').innerHTML = data;
+            });
+    </script>
+    </div>
+</body>
+</html>

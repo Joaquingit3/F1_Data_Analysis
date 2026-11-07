@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> F1DataHub - Fórmula 1 analizada con datos en español</title>
+    <link rel="icon" href="imagenes/favicon.png" type="image/png">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- BOOTSTRAP-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        section {
+            width: 100%;
+            max-width: 1200px; /* Ajusta según tu diseño */
+            margin: 0 auto; /* Centrar la sección */
+            scroll-margin-top: 130px;
+        } 
+    </style>
+
+    <!-- Código de Google AdSense
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-XXXXXXXXXXXXXXXX",
+              enable_page_level_ads: true
+         });
+    </script>
+    -->
+</head>
+<body>
+    <!-- Header Dinámico -->
+    <div id="header">
+      <script>
+          fetch('header.html')
+              .then(response => response.text())
+              .then(data => {
+                  document.getElementById('header').innerHTML = data;
+
+                  const headerElement = document.querySelector('header'); // Selector del header ya cargado
+
+                  // Este es el código que gestiona la clase 'hidden'
+                  let lastScrollTop = 0;
+
+                  window.addEventListener('scroll', function() {
+                      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                      if (currentScrollTop > lastScrollTop) {
+                          // El usuario hace scroll hacia abajo, ocultar la cabecera
+                          headerElement.classList.add('hidden');
+                      } else {
+                          // El usuario hace scroll hacia arriba, mostrar la cabecera
+                          headerElement.classList.remove('hidden');
+                      }
+
+                      lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Evita valores negativos
+                  });
+              });
+      </script>
+    </div>
+
+    <main class="main-content">
+        <section class="articles-list">
+            <div class="layout-begining" style="gap: 0">
+                <!-- Título Mundial de Pilotos-->
+                <div class="title-container" id="mundial-pilotos">
+                    <h2 class="main-title" style="font-weight: bold; font-family: Arial, sans-serif; font-size: 2em"> <span>Mundial de Pilotos</span></h2>
+                </div>
+
+                <!--  Selector de Mundial Pilotos y Constructores -->
+                <div class="bootstrap-scope">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#mundial-pilotos">Mundial de Pilotos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#mundial-constructores">Mundial de Constructores</a>
+                        </li>
+                    </ul>
+                </div>  
+
+                <!--  Tabla del mundial-->
+                <div class="mundial-pilotos">
+                    <div class="winning-photo">
+                        <div class="wining-marco">
+                            <img src="imagenes/pilotos/{{filas_pilotos[0].nombre.lower()}}_{{filas_pilotos[0].apellido.lower()}}.png" alt="Piloto Ganador">
+                        </div>
+                        <div class="wining-text">
+                            <h2 class="position">1º</h2>
+                            <div class="driver-name">
+                                <h2 class="first-name">{{filas_pilotos[0].nombre}}</h2>
+                                <h2 class="last-name">{{filas_pilotos[0].apellido}}</h2>
+                            </div>
+                        </div>
+                        <div class="wining-table">
+                            
+                            <div class="wining-table-title">
+                                <h2 style="font-size: 1.1rem; margin: 0; font-weight: bold; ">Estadísticas Temporada</h2>
+                            </div>
+                            <table>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold"> Puntos</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.puntos}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Victorias</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.victorias}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Victorias (%)</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.tasa_victorias}}%</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Podios</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.podios}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Poles</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.poles}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Top 10s</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.top_tens}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">DNFs</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.dnfs}}</td>
+                                </tr>
+                            </table>
+
+                            <div class="wining-table-title" style="margin-top: 5%">
+                                <h2 style="font-size: 1.1rem; margin: 0; font-weight: bold; ">Estadísticas Globales</h2>
+                            </div>
+                            <table>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Temporadas</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.temporadas}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">GPs</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.gps_totales}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Campeonatos</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.campeonatos}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Victorias</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.victorias_totales}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Podios</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.podios_totales}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Puntos</td>
+                                    <td class="text-stats">{{filas_pilotos[0].filas_stats_piloto.puntos_totales}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Nº de coche</td>
+                                    <td class="text-stats" style="color: red; font-weight: bold">{{filas_pilotos[0].filas_stats_piloto.numero}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td class="posicion"> </td>
+                                <td class="pais"></td>
+                                <td class="nombre">Piloto</td>
+                                <td class="equipo"></td>
+                                <td class="nombre">Equipo</td>
+                                <td class="puntos" style="font-weight: normal">Puntos</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for fila in filas_pilotos%}
+                            <tr>
+                                <td class="posicion">{{fila.posicion}}</td>
+                                <td class="pais"><img src="imagenes/paises/{{fila.nacionalidad_img}}.jpg"></td>
+                                <td class="nombre" onclick="toggleDetalle(this)">{{fila.nombre}} {{fila.apellido}}</td>
+                                <td class="equipo"><img src="imagenes/equipos/logo_{{fila.equipo}}.png"></td>
+                                <td class="nombre">{{fila.equipo}}</td>
+                                <td class="puntos">{{fila.puntos}}</td>
+                            </tr>
+                            <!-- Fila detalle (oculta al inicio) -->
+                            <tr class="fila-detalle" style="display: none;">
+                                <td colspan="6">
+                                    <div class="grid-estadisticas">
+                                        <!-- Fila 1 - Columna 1 -->
+                                        <div class="celda">
+                                            <div class="winning-photo">
+                                                <div class="wining-marco" style="background-color: {{fila.color}};">
+                                                    <img src="imagenes/pilotos/{{fila.nombre.lower()}}_{{fila.apellido.lower()}}.png" alt="Piloto Ganador">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Fila 1 - Columna 2 -->
+                                        <div class="celda">
+                                            <div class="info-block">
+                                                <h2>{{fila.nombre}}</h2>
+                                                <h1>{{fila.apellido}}</h1>
+                                                <div class="nacionalidad">
+                                                    <img src="imagenes/paises/{{fila.nacionalidad_img}}.jpg">
+                                                    <p>{{fila.nacionalidad}}</p>
+                                                </div>
+                                                <div class="team">
+                                                    <img src="imagenes/equipos/logo_{{fila.equipo}}.png">
+                                                    <p>{{fila.equipo}}</p>
+                                                </div>
+                                                <p>{{fila.filas_stats_piloto.numero}}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Fila 2 - Columna 1 -->
+                                        <div class="celda">
+                                            <div class="bloque-estadisticas">
+                                                <div class="bloque-estadisticas-title">
+                                                    <h2>Estadísticas Temporada</h2>
+                                                </div>
+                                                <table>
+                                                    <tr><td><strong>Puntos</strong></td><td>{{fila.filas_stats_piloto.puntos}}</td></tr>
+                                                    <tr><td><strong>Victorias</strong></td><td>{{fila.filas_stats_piloto.victorias}}</td></tr>
+                                                    <tr><td><strong>Victorias (%)</strong></td><td>{{fila.filas_stats_piloto.tasa_victorias}}</td></tr>
+                                                    <tr><td><strong>Podios</strong></td><td>{{fila.filas_stats_piloto.podios}}</td></tr>
+                                                    <tr><td><strong>Poles</strong></td><td>{{fila.filas_stats_piloto.poles}}</td></tr>
+                                                    <tr><td><strong>Top 10s</strong></td><td>{{fila.filas_stats_piloto.top_tens}}</td></tr>
+                                                    <tr><td><strong>DNFs</strong></td><td>{{fila.filas_stats_piloto.dnfs}}</td></tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- Fila 2 - Columna 2 -->
+                                        <div class="celda">
+                                            <div class="bloque-estadisticas">
+                                                <div class="bloque-estadisticas-title">
+                                                    <h2>Estadísticas Globales</h2>
+                                                </div>
+                                                <table>
+                                                    <tr><td><strong>Temporadas</strong></td><td>{{fila.filas_stats_piloto.temporadas}}</td></tr>
+                                                    <tr><td><strong>GPs</strong></td><td>{{fila.filas_stats_piloto.gps_totales}}</td></tr>
+                                                    <tr><td><strong>Campeonatos</strong></td><td>{{fila.filas_stats_piloto.campeonatos}}</td></tr>
+                                                    <tr><td><strong>Victorias</strong></td><td>{{fila.filas_stats_piloto.victorias_totales}}</td></tr>
+                                                    <tr><td><strong>Podios</strong></td><td>{{fila.filas_stats_piloto.podios_totales}}</td></tr>
+                                                    <tr><td><strong>Puntos</strong></td><td>{{fila.filas_stats_piloto.puntos_totales}}</td></tr>
+                                                    <tr><td><strong>Nº de coche</strong></td><td style="color: red; font-weight: bold;">{{fila.filas_stats_piloto.numero}}</td></tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Fila 3 - Histórico Posiciones -->
+                                        <div class="celda-grafica">
+                                            <div class="icono-globales-contenedor">
+                                                <img src="imagenes/historico_pilotos/historico_posiciones_{{fila.abreviatura}}.png" alt="Historico Posiciones {{fila.abreviatura}}" class="icono-global-grande" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--  Gráfica de Mundial de Pilotos-->
+                <div class="graph-historic">
+                    <img src="imagenes/historico/mundial_Pilotos_historic.png" alt="Mundial de Pilotos Historico">
+                </div>
+
+                <!-- Mundial de Constructures-->
+                <div class="title-container" style="padding-top: 50px;" id="mundial-constructores">
+                    <h2 class="main-title" style="font-weight: bold; font-family: Arial, sans-serif; font-size: 1.8rem"> <span>Mundial de Constructores</span></h2>
+                </div>
+
+                <!--  Selector de Mundial Pilotos y Constructores -->
+                <div class="bootstrap-scope" >
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#mundial-pilotos">Mundial de Pilotos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#mundial-constructores">Mundial de Constructores</a>
+                        </li>
+                    </ul>
+                </div>  
+                
+                <!--  Tabla del mundial-->
+                <div class="mundial-constructores">
+                    <div class="winning-photo">
+                        <div class="wining-marco" style="background-color: {{filas_constructores[0].color}}">
+                            <img src="imagenes/equipos/logo_{{filas_constructores[0].logo_name}}.png" alt="Escuderia Ganador">
+                        </div>
+                        <div class="wining-text-constructors">
+                            <h2 class="position-constructor">1º</h2>
+                            <h2 class="constructor-name">{{filas_constructores[0].equipo}}</h2>
+                        </div>
+                        <div class="wining-table">
+                            <table>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Victorias</td>
+                                    <td class="text-stats">{{filas_constructores[0].filas_stats_constructor.victorias}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Podios</td>
+                                    <td class="text-stats">{{filas_constructores[0].filas_stats_constructor.podios}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo-stats" style="font-weight: bold">Poles</td>
+                                    <td class="text-stats">{{filas_constructores[0].filas_stats_constructor.poles}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td class="posicion"> </td>
+                                <td class="nombre">Equipo</td>
+                                <td class="equipo"></td>
+                                <td class="puntos" style="font-weight: normal">Puntos</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for fila in filas_constructores%}
+                        <tr>
+                            <td class="posicion">{{fila.posicion}}</td>
+                            <td class="nombre" onclick="toggleDetalle(this)">{{fila.equipo}}</td>
+                            <td class="equipo"><img src="imagenes/equipos/logo_{{fila.equipo}}.png"></td>
+                            <td class="puntos">{{fila.puntos}}</td>
+                        </tr>
+                        <!-- Fila detalle (oculta al inicio) -->
+                        <tr class="fila-detalle" style="display: none;">
+                            <td colspan="6">
+                                <div class="grid-estadisticas">
+                                    <!-- Fila 1 - Columna 1 -->
+                                    <div class="celda">
+                                        <div class="winning-photo">
+                                            <div class="wining-marco" style="background-color: {{fila.color}};">
+                                                <img src="imagenes/equipos/logo_{{fila.logo_name}}.png" alt="Equipo {{fila.equipo}}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Fila 1 - Columna 2 -->
+                                    <div class="celda">
+                                        <div class="bloque-estadisticas">
+                                            <div class="bloque-estadisticas-title">
+                                                <h2>Estadísticas Temporada</h2>
+                                            </div>
+                                            <table>
+                                                <tr><td><strong>Puntos</strong></td><td>{{fila.puntos}}</td></tr>
+                                                <tr><td><strong>Victorias</strong></td><td>{{fila.filas_stats_constructor.victorias}}</td></tr>
+                                                <tr><td><strong>Podios</strong></td><td>{{fila.filas_stats_constructor.podios}}</td></tr>
+                                                <tr><td><strong>Poles</strong></td><td>{{fila.filas_stats_constructor.poles}}</td></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--  Gráfica de Mundial de Constructores-->
+                <div class="graph-historic">
+                    <img src="imagenes/historico/mundial_Equipos_historic.png" alt="Mundial de Equipos Historico">
+                </div>
+            </div>
+
+            <!-- Script de despligue de la tabla-->
+            <script>
+                function toggleDetalle(button) {
+                    const filaDetalle = button.closest('tr').nextElementSibling;
+                    filaDetalle.style.display = (filaDetalle.style.display === 'none') ? 'table-row' : 'none';
+                }
+            </script>
+
+            <!-- Espacio para Anuncio -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+    </main>
+
+    <div id="footer">
+      <script>
+          fetch('footer.html')
+              .then(response => response.text())
+              .then(data => {
+                  document.getElementById('footer').innerHTML = data;
+              });
+      </script>
+    </div>
+</body>
+</html>

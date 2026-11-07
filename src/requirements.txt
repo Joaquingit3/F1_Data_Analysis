@@ -1,0 +1,17 @@
+jupyter
+numpy
+matplotlib
+pandas
+seaborn
+fastf1==3.8.3
+pillow
+scikit-learn
+pdf2image
+boto3
+pytz
+tabulate
+pycountry
+statsmodels
+fastapi
+rich
+python-dotenv
