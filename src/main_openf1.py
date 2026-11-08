@@ -80,7 +80,7 @@ def main(
             results=df_results,
             option="teams",
             trend=False,
-            use_Q1_data=True,
+            use_Q1_data=use_Q1_data,
         )
 
     # ------------------------- CREATE RACE HTML  ----------------------------------------------------------------------
@@ -93,11 +93,19 @@ def main(
         # Update stats
         update_qualy_stats(df_results)
 
+    # Save GAP
+    if save_gap:
+        save_time_gap(
+            df_results,
+            session_data.session_info.Meeting.Number,
+            session_data.session_info.Meeting.Country.Code,
+            use_Q1_data=use_Q1_data,
+        )
+
     # 2) Cargar las vueltas rapidas
     laps_driver_1 = openf1_client.get_laps_from_driver(df_results, session_data.session_key, driver1)
     laps_driver_2 = openf1_client.get_laps_from_driver(df_results, session_data.session_key, driver2)
     custom_wait(3)
-
     lap_number_driver_1 = get_lap_number_of_session(session_data, laps_driver_1, "Q3")
     lap_number_driver_2 = get_lap_number_of_session(session_data, laps_driver_2, "Q3")
     
@@ -182,23 +190,13 @@ def main(
     #         fastest_driver_2
     #     )
 
-    # Save GAP
-    # print(session_data)
-    # save_time_gap(
-    #     df_results,
-    #     session_data.session_info.Meeting.Number,
-    #     session_data.session_info.Meeting.Country.Code,
-    #     use_Q1_data=True,
-    # )
-
 
 if __name__ == "__main__":
     year = 2026
-    grand_prix = "Mexico City"
-    # grand_prix = "Marina Bay"
+    grand_prix = "São Paulo"
     session = "Qualifying"
-    driver1 = "ALO"
-    driver2 = "VER"
+    driver1 = "NOR"
+    driver2 = "ALO"
 
     try:
         main(
@@ -207,7 +205,9 @@ if __name__ == "__main__":
             session=session,
             driver1=driver1,
             driver2=driver2,
-            plot_gap=True
+            plot_gap=False,
+            save_gap=False,
+            use_Q1_data=False
         )
     except OpenF1AuthenticationError as e:
         print(f"[OpenF1] {e}", file=sys.stderr)

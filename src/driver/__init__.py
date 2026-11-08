@@ -27,6 +27,7 @@ DICT_ABR_TO_NACIONALITY = {
     'BOT':'FIN',
     'PER':'MEX',
     'HIR':'JPN',
+    'CAM':'BRA',
 }
 
 
@@ -54,5 +55,5 @@ DICT_ABR_TO_NAME = {
     "PER": "Sergio PEREZ",
     "BOT": "Valtteri BOTTAS",
     "HIR": "Ryō HIRAKAWA",
-
+    "CAM": "Rafael CÂMARA",
 }

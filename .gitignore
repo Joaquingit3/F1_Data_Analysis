@@ -38,3 +38,6 @@ __pycache__/
 
 # vscode 
 .vscode/
+
+# meetings tab
+meetings_2026.csv
